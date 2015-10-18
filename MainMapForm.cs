@@ -66,6 +66,7 @@ namespace DriverRoutingSimulation
         string mWhatToDoOnClick;
 
         float mSimSpeed;
+        TimeSpan mRefreshRate;
         float mDriverFee;
         float mDeliveryFee;
         float mDollarPerKM;
@@ -119,12 +120,13 @@ namespace DriverRoutingSimulation
             mColourToPick = 0;
 
             mSimSpeed = 1;
+            mRefreshRate = TimeSpan.FromSeconds(1);
             mDriverFee = 3;
             mDeliveryFee = 0;
             mDollarPerKM = 0.3f;
             mAverageKMPerHour = 40;
             mMaximumKMPerHour = 60;
-            mMaxPickupDistance = 0;
+            mMaxPickupDistance = 60;
             mDriverMinReliability = 80;
             mDriverMaxReliability = 95;
 
@@ -160,12 +162,14 @@ namespace DriverRoutingSimulation
             mDriverMarkers.Markers.Add(driver.Marker);
         }
 
-        private void AddDeliveryMarker(PointLatLng aPointToPlaceDriverMarker, Color aMarkerColour, int aOrderNumber)
+        private GMap.NET.WindowsForms.Markers.GMarkerGoogle AddDeliveryMarker(PointLatLng aPointToPlaceDriverMarker, Color aMarkerColour, int aOrderNumber)
         {
             GMap.NET.WindowsForms.Markers.GMarkerGoogle marker = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(aPointToPlaceDriverMarker, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green);
             marker.ToolTipText = aOrderNumber.ToString();
             gMapControl_MainMap_MainMapForm.Overlays.Add(mDeliveryMarkers);
             mDeliveryMarkers.Markers.Add(marker);
+
+            return marker;
         }
         
         private void AddPolygon()
@@ -188,8 +192,9 @@ namespace DriverRoutingSimulation
 
         private GMapRoute AddRoute(PointLatLng aOrigin, PointLatLng aDestination)
         {
-            MapRoute route = GMap.NET.MapProviders.OpenStreetMapProvider.Instance.GetRoute(aOrigin, aDestination, false, false, 15);
-
+            MapRoute route = GMap.NET.MapProviders.OpenStreetMapProvider.Instance.GetRoute(aOrigin, aDestination, false, false, 18);
+            int tempZoom = gMapControl_MainMap_MainMapForm.MaxZoom;
+            
             if (route == null)
             {
                 UpdateMap(null);
@@ -201,7 +206,7 @@ namespace DriverRoutingSimulation
             double tempTwo = route.Distance;
             double tempTime = temp / 40;
 
-            UpdateMap(gRoute);
+            mAllRoutes.Routes.Add(gRoute);
 
             return gRoute;
         }
@@ -332,8 +337,8 @@ namespace DriverRoutingSimulation
                             if (wasRouteCreated == null)
                                 break;
 
-                            AddDeliveryMarker(mTempOrder.PickupPoint, realColor, mColourToPick);
-                            AddDeliveryMarker(mTempOrder.DropoOffPoint, realColor, mColourToPick);
+                            mTempOrder.PickupMarker = AddDeliveryMarker(mTempOrder.PickupPoint, realColor, mColourToPick);
+                            mTempOrder.DropOffMarker = AddDeliveryMarker(mTempOrder.DropoOffPoint, realColor, mColourToPick);
                             mTempOrder.TimeOrderWasCreated = DateTime.Now;
 
                             mColourToPick++;
@@ -395,7 +400,90 @@ namespace DriverRoutingSimulation
                 }
             }
         }
+        
+        private void button_AddDeliveryComplete_MainMapForm_Click(object sender, EventArgs e)
+        {
+            if (textBox_OriginAddress_MainMapForm.Text != string.Empty &&
+                textBox_DestinationAddress_MainMapForm.Text != string.Empty)
+            {
+                //TODO: Clear boxes
+                Order order = new Order();
+                order.OrderName = "ORDER";
+                int count = 0;
 
+                string originAddress = textBox_OriginAddress_MainMapForm.Text;
+                string destinationAddress = textBox_DestinationAddress_MainMapForm.Text;
+                //textBox_OriginAddress_MainMapForm.Text = string.Empty;
+                //textBox_DestinationAddress_MainMapForm.Text = string.Empty;
+
+                GeoCoderStatusCode status;
+
+                PointLatLng? originPoint = GMap.NET.MapProviders.GoogleMapProvider.Instance.GetPoint(originAddress, out status);
+                if (status == GeoCoderStatusCode.G_GEO_SUCCESS && originPoint != null)
+                {
+                    order.PickupPoint = (PointLatLng)originPoint;
+                }
+
+                PointLatLng? destinationPoint = GMap.NET.MapProviders.GoogleMapProvider.Instance.GetPoint(destinationAddress, out status);
+                if (status == GeoCoderStatusCode.G_GEO_SUCCESS && originPoint != null)
+                {
+                    order.DropoOffPoint = (PointLatLng)destinationPoint;
+                }
+
+                KnownColor[] values = (KnownColor[])Enum.GetValues(typeof(KnownColor));
+                foreach (KnownColor kc in values)
+                {
+                    Color realColor = Color.FromKnownColor(kc);
+
+                    if (count == mColourToPick)
+                    {
+                        order.OrderColour = realColor;
+                        GMapRoute wasRouteCreated = AddRoute(order.PickupPoint, order.DropoOffPoint);
+
+                        if (wasRouteCreated == null)
+                            break;
+
+                        order.PickupMarker = AddDeliveryMarker(order.PickupPoint, realColor, mColourToPick);
+                        order.DropOffMarker = AddDeliveryMarker(order.DropoOffPoint, realColor, mColourToPick);
+                        order.TimeOrderWasCreated = DateTime.Now;
+
+                        mColourToPick++;
+                        mWhatToDoOnClick = mCommandAddItemPickupPoint;
+                        mItems.Add(order);
+
+                        break;
+                    }
+
+                    count++;
+                }
+            }
+        }
+
+        private double DistanceBetweenTwoPoints(PointLatLng aOrigin, PointLatLng aDestination)
+        {
+            float meters = 6371000;
+
+            double lat1 = aOrigin.Lat;
+            double lng1 = aOrigin.Lng;
+            double lat2 = aDestination.Lat;
+            double lng2 = aDestination.Lng;
+
+            double lat1InRads = lat1 * (Math.PI / 180.0f);
+            double lat2InRads = lat2 * (Math.PI / 180.0f);
+
+            double thetaLat = (lat2 - lat1) * (Math.PI / 180.0f);
+            double thetaLng = (lng2 - lng1) * (Math.PI / 180.0f);
+
+            double dist = Math.Sin(thetaLat / 2) * Math.Sin(thetaLat / 2) +
+                            Math.Cos(lat1InRads) * Math.Cos(lat2InRads) *
+                            Math.Sin(thetaLng / 2) * Math.Sin(thetaLng / 2);
+
+            double otherDist = 2 * Math.Atan2(Math.Sqrt(dist), Math.Sqrt(1 - dist));
+
+            double finalDist = meters * otherDist;
+
+            return finalDist;
+        }
         //THREAD FUNCTIONS
         private void StartThreads()
         {
@@ -449,52 +537,129 @@ namespace DriverRoutingSimulation
         private void DriverThread()
         {
             Driver tempDriver;
+            double shortestDistance = -1;
+            int shortestDistanceIndex = -1;
 
             while (mIsDriverThreadAlive == true)
             {
                 //TODO: Driver stuff
                 //TODO: For all threads, have a label for each one, saying if it is alive or not
-                Thread.Sleep(5000);
+                Thread.Sleep(mRefreshRate);
 
                 for(int i = 0; i < mDrivers.Count; i++)
                 {
+                    shortestDistance = -1;
+                    shortestDistanceIndex = -1;
+
+                    if(mDrivers[i].TimeToWait > 0)
+                    {
+                        Driver waitingDriver = mDrivers[i];
+                        waitingDriver.TimeToWait--;
+                        mDrivers[i] = waitingDriver;
+                        continue;
+                    }
+
                     for(int j = 0; j < mItems.Count; j++)
                     {
-                        if(mDrivers[i].Marker.Position.Lat - mItems[j].PickupPoint.Lat <= mMaxPickupDistance ||
-                            mDrivers[i].Marker.Position.Lng - mItems[j].PickupPoint.Lng <= mMaxPickupDistance)  //TODO: Absolute value?
+                        if (mDrivers[i].MapRoute != null)
+                            break;
+                        //TODO: Make a distance function. 
+                        //Have a var for index and a var for shoartest distance
+                        //When a distance shorter then the previous one is found, update those vars
+                        double tempDistance = DistanceBetweenTwoPoints(mDrivers[i].Marker.Position, mItems[j].PickupPoint);
+
+                        if(shortestDistance == -1 || tempDistance < shortestDistance)
                         {
-                            int doIPickUp = mRandom.Next(0, 100);
-                            if(doIPickUp < mDrivers[i].DriverReliability && mDrivers[i].OrderWorkingOn.OrderName == mCommandNoOrder)
-                            {
-                                tempDriver = mDrivers[i];
-                                tempDriver.MapRoute = AddRoute(mDrivers[i].Marker.Position, mItems[j].PickupPoint);
-                                tempDriver.OrderWorkingOn = mItems[j];
-                                mDrivers[i] = tempDriver;
-                                
-                                mDealtWithItems.Add(mItems[j]);
-                                mItems.RemoveAt(j);
-                            }
+                            shortestDistance = tempDistance;
+                            shortestDistanceIndex = j;
                         }
                     }
+
+                    int doIPickUp = mRandom.Next(0, 100);
+                    if (doIPickUp < mDrivers[i].DriverReliability && mDrivers[i].OrderWorkingOn.OrderName == mCommandNoOrder)
+                    {
+                        tempDriver = mDrivers[i];
+                        tempDriver.MapRoute = AddRoute(mDrivers[i].Marker.Position, mItems[shortestDistanceIndex].PickupPoint);
+                        tempDriver.OrderWorkingOn = mItems[shortestDistanceIndex];
+                        tempDriver.CurrentPointAt = 0;
+
+                        UpdateMap(tempDriver.MapRoute);
+                        mDrivers[i] = tempDriver;
+
+                        mDealtWithItems.Add(mItems[shortestDistanceIndex]);
+                        mItems.RemoveAt(shortestDistanceIndex);
+                    }
+                    else
+                    {
+                        Driver waitingDriver = mDrivers[i];
+                        waitingDriver.TimeToWait = (150 / 10) / mSimSpeed;
+                        mDrivers[i] = waitingDriver;
+                    }
+                        
 
                     if (mDrivers[i].MapRoute == null)
                         continue;
 
                     float numOfPoints = mDrivers[i].MapRoute.Points.Count;
-                    double distanceToTravelPerTick = mDrivers[i].MapRoute.Distance / mAverageKMPerHour;
-                    //float pointsToMove = ((numOfPoints / 60.0f) / 60.0f) * mSimSpeed;
+                    double travelTime = (mDrivers[i].MapRoute.Distance / mAverageKMPerHour) * 60;
+                    double distanceToTravelPerTick = ((mDrivers[i].MapRoute.Distance * 1000.0f) / (11.0f * mRefreshRate.TotalSeconds)) / 100;
+                    float pointsToMove = ((numOfPoints / 60.0f) / 60.0f) * mSimSpeed;
+                    double distancePerPoint = (numOfPoints / mDrivers[i].MapRoute.Distance);
+                    double test1 = distanceToTravelPerTick / distancePerPoint;
+                    double test2 = distancePerPoint / distanceToTravelPerTick;
+                    int pointToGoTo = 0;
 
-                    int tempasf = -1;
+                    for(float k = mDrivers[i].CurrentPointAt; k < numOfPoints; k++)
+                    {
+                        double finalDist = DistanceBetweenTwoPoints(mDrivers[i].MapRoute.Points.ElementAt((int)Math.Round(mDrivers[i].CurrentPointAt)), mDrivers[i].MapRoute.Points.ElementAt((int)Math.Round(k)));
+                        
+                        if(finalDist >= distanceToTravelPerTick)
+                        {
+                            pointToGoTo = (int)Math.Floor(k);
+                            break;
+                        }
+                    }
+                    
+                    tempDriver = mDrivers[i];
+                    if (tempDriver.MapRoute.Points.Count - 1 > tempDriver.CurrentPointAt)
+                    {
+                        tempDriver.Marker.Position = tempDriver.MapRoute.Points.ElementAt((int)Math.Round(tempDriver.CurrentPointAt));
+                        tempDriver.CurrentPointAt = pointToGoTo * mSimSpeed;
+                    }
+                    else
+                    {
+                        mRoutes.Routes.Remove(tempDriver.MapRoute);
+                        tempDriver.TimeToWait = (60 / 10) / mSimSpeed;
+
+                        if (tempDriver.OrderWorkingOn.PickupMarker != null)
+                        {
+                            mDeliveryMarkers.Markers.Remove(tempDriver.OrderWorkingOn.PickupMarker);
+                            Order tempOrder = tempDriver.OrderWorkingOn;
+                            tempOrder.PickupMarker = null;
+                            tempDriver.OrderWorkingOn = tempOrder;
+
+                            tempDriver.MapRoute = AddRoute(tempDriver.Marker.Position, tempDriver.OrderWorkingOn.DropoOffPoint);
+                            UpdateMap(tempDriver.MapRoute);
+                            tempDriver.CurrentPointAt = 0;
+                        }
+                        else
+                        {
+                            mDeliveryMarkers.Markers.Remove(tempDriver.OrderWorkingOn.DropOffMarker);
+                            Order tempOrder = tempDriver.OrderWorkingOn;
+                            tempOrder.DropOffMarker = null;
+                            tempOrder.OrderName = mCommandNoOrder;
+                            tempDriver.OrderWorkingOn = tempOrder;
+                            tempDriver.MapRoute = null;
+                        }
+                    }
+
+                    mDrivers[i] = tempDriver;
 
                     //distance / 40 / 60 (or * 60?) should get me the distance it needs to move every second. Multiply that by the rest time to get distance per tick
 
                     //Increment which point the driver is at based on the 40km/h average multiplied by mSimSpeed.
                     //Use the average speed to determine how long the trip will take. Then, move the marker an appropriate amount
                     //mDrivers[i].TripTime = mDrivers[i].MapRoute.Distance / mAverageKMPerHour;
-                    //mDrivers[i].MapRoute.Points
-                    //Move the marker with this:
-                    //mDrivers[i].Marker.Position = newLatLngPos;
-                    //TODO: When a driver drops off the order, change the order name to mCommandNoOrder
                 }
             }
         }
@@ -513,7 +678,7 @@ namespace DriverRoutingSimulation
             while (mIsStatsThreadAlive == true)
             {
                 //TODO: Stats stuff
-                Thread.Sleep(5000);
+                Thread.Sleep(mRefreshRate);
 
                 //Efficiency Stats
                 float maxEfficiency = mDollarPerKM * mMaximumKMPerHour;
@@ -525,7 +690,7 @@ namespace DriverRoutingSimulation
                 UpdateStats(averageEfficiencyString, textBox_AverageEfficiency_MainMapForm);
 
                 double totalDistance = 0;
-                double extraTime = 0;
+                double extraTime = 12;
 
                 for(int i = 0; i < mAllRoutes.Routes.Count; i++)
                 {
@@ -566,7 +731,7 @@ namespace DriverRoutingSimulation
         }
 
         //DELEGATE FUNCTIONS
-        private void UpdateStats(string aStat, TextBox aTextBoxToUpdate) //Make one for each, or have it take in the textbox it's updating
+        private void UpdateStats(string aStat, TextBox aTextBoxToUpdate)
         {
             if (this.InvokeRequired)
             {
@@ -578,7 +743,7 @@ namespace DriverRoutingSimulation
                 aTextBoxToUpdate.Text = aStat;
             }
         }
-        private void UpdateMap(GMapRoute aRoute) //Make one for each, or have it take in the textbox it's updating
+        private void UpdateMap(GMapRoute aRoute)
         {
             if (this.InvokeRequired)
             {
@@ -593,68 +758,9 @@ namespace DriverRoutingSimulation
                     return;
                 }
                 mRoutes.Routes.Add(aRoute);
-                mAllRoutes.Routes.Add(aRoute);
                 //gRoute.Stroke.Width = 2;
                 //gRoute.Stroke.Color = Color.SeaGreen;
                 gMapControl_MainMap_MainMapForm.Overlays.Add(mRoutes);
-            }
-        }
-        
-        private void button_AddDeliveryComplete_MainMapForm_Click(object sender, EventArgs e)
-        {
-            if(textBox_OriginAddress_MainMapForm.Text != string.Empty &&
-                textBox_DestinationAddress_MainMapForm.Text != string.Empty)
-            {
-                //TODO: Clear boxes
-                Order order = new Order();
-                order.OrderName = "ORDER";
-                int count = 0;
-
-                string originAddress = textBox_OriginAddress_MainMapForm.Text;
-                string destinationAddress = textBox_DestinationAddress_MainMapForm.Text;
-                textBox_OriginAddress_MainMapForm.Text = string.Empty;
-                textBox_DestinationAddress_MainMapForm.Text = string.Empty;
-
-                GeoCoderStatusCode status;
-
-                PointLatLng? originPoint = GMap.NET.MapProviders.GoogleMapProvider.Instance.GetPoint(originAddress, out status);
-                if (status == GeoCoderStatusCode.G_GEO_SUCCESS && originPoint != null)
-                {
-                    order.PickupPoint = (PointLatLng)originPoint;
-                }
-
-                PointLatLng? destinationPoint = GMap.NET.MapProviders.GoogleMapProvider.Instance.GetPoint(destinationAddress, out status);
-                if (status == GeoCoderStatusCode.G_GEO_SUCCESS && originPoint != null)
-                {
-                    order.DropoOffPoint = (PointLatLng)destinationPoint;
-                }
-
-                KnownColor[] values = (KnownColor[])Enum.GetValues(typeof(KnownColor));
-                foreach (KnownColor kc in values)
-                {
-                    Color realColor = Color.FromKnownColor(kc);
-
-                    if (count == mColourToPick)
-                    {
-                        order.OrderColour = realColor;
-                        GMapRoute wasRouteCreated = AddRoute(order.PickupPoint, order.DropoOffPoint);
-
-                        if (wasRouteCreated == null)
-                            break;
-
-                        AddDeliveryMarker(order.PickupPoint, realColor, mColourToPick);
-                        AddDeliveryMarker(order.DropoOffPoint, realColor, mColourToPick);
-                        order.TimeOrderWasCreated = DateTime.Now;
-
-                        mColourToPick++;
-                        mWhatToDoOnClick = mCommandAddItemPickupPoint;
-                        mItems.Add(order);
-
-                        break;
-                    }
-
-                    count++;
-                }
             }
         }
     }
@@ -669,6 +775,20 @@ namespace DriverRoutingSimulation
         PointLatLng pickupPoint;
         PointLatLng dropoOffPoint;
         Color orderColour;
+        GMap.NET.WindowsForms.Markers.GMarkerGoogle pickupMarker;
+        GMap.NET.WindowsForms.Markers.GMarkerGoogle dropoffMarker;
+
+        public GMap.NET.WindowsForms.Markers.GMarkerGoogle PickupMarker
+        {
+            get { return pickupMarker; }
+            set { pickupMarker = value; }
+        }
+
+        public GMap.NET.WindowsForms.Markers.GMarkerGoogle DropOffMarker
+        {
+            get { return dropoffMarker; }
+            set { dropoffMarker = value; }
+        }
 
         public string OrderName
         {
@@ -746,7 +866,9 @@ namespace DriverRoutingSimulation
         float kmDriven;
         float moneyMade;
         float timeWorked;
+        float currentPointAt;
         double tripTime;
+        double timeToWait;
         int driverReliability;
         GMapRoute mapRoute;
         //GMapRoute gMapRoute;
@@ -771,10 +893,22 @@ namespace DriverRoutingSimulation
             set { timeWorked = value; }
         }
 
+        public float CurrentPointAt
+        {
+            get { return currentPointAt; }
+            set { currentPointAt = value; }
+        }
+
         public double TripTime
         {
             get { return tripTime; }
             set { tripTime = value; }
+        }
+
+        public double TimeToWait
+        {
+            get { return timeToWait; }
+            set { timeToWait = value; }
         }
         
         public int DriverReliability

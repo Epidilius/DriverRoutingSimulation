@@ -273,9 +273,9 @@
             this.label_SimulationSpeed_MainMapForm.AutoSize = true;
             this.label_SimulationSpeed_MainMapForm.Location = new System.Drawing.Point(3, 171);
             this.label_SimulationSpeed_MainMapForm.Name = "label_SimulationSpeed_MainMapForm";
-            this.label_SimulationSpeed_MainMapForm.Size = new System.Drawing.Size(175, 13);
+            this.label_SimulationSpeed_MainMapForm.Size = new System.Drawing.Size(92, 13);
             this.label_SimulationSpeed_MainMapForm.TabIndex = 6;
-            this.label_SimulationSpeed_MainMapForm.Text = "Simulation Speed: Not Implemented";
+            this.label_SimulationSpeed_MainMapForm.Text = "Simulation Speed:";
             // 
             // textBox_MaxTravelDistance_MainMapForm
             // 
