@@ -1,6 +1,6 @@
 ﻿namespace DriverRoutingSimulation
 {
-    partial class Form1
+    partial class DriverSimHomeForm
     {
         /// <summary>
         /// Required designer variable.

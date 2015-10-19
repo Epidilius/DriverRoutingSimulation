@@ -298,6 +298,11 @@ namespace DriverRoutingSimulation
             mWhatToDoOnClick = mCommandDoNothing;
         }
 
+        private void button_GenerateReport_MainMapForm_Click(object sender, EventArgs e)
+        {
+            GenerateReport();
+        }
+
         private void gMapControl_MainMap_MainMapForm_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -522,6 +527,41 @@ namespace DriverRoutingSimulation
             double finalDist = meters * otherDist;
 
             return finalDist;
+        }
+
+        private void GenerateReport()
+        {
+            StopThreads();
+
+            string currentDir = Directory.GetCurrentDirectory() + "\\Reports";
+            string dataDriver = mTitleDriverSection + Environment.NewLine + Environment.NewLine;
+            string dataOrder = mTitleOrderSection + Environment.NewLine + Environment.NewLine;
+
+            if (!Directory.Exists(currentDir))
+                System.IO.Directory.CreateDirectory(currentDir);
+
+            dataOrder += "--- ITEMS NOT YET DELIVERED ---" + Environment.NewLine;
+            for (int i = 0; i < mItems.Count; i++)
+            {
+                dataOrder += mItems[i].ToString();
+            }
+
+            dataOrder += "--- ITEMS DELIVERED ---" + Environment.NewLine;
+            for (int i = 0; i < mDealtWithItems.Count; i++)
+            {
+                dataOrder += mDealtWithItems[i].ToString();
+            }
+
+            string[] filesAlreadyCreated = Directory.GetFiles(currentDir, mTitleFileName + "*")
+                                     .Select(path => Path.GetFileName(path))
+                                     .ToArray();
+
+            string title = currentDir + "\\" + mTitleFileName + " " + filesAlreadyCreated.Length.ToString() + ".txt";
+
+            System.IO.StreamWriter file = new System.IO.StreamWriter(title);
+            file.WriteLine(dataDriver + dataOrder);
+
+            file.Close();
         }
 
         //THREAD FUNCTIONS
@@ -846,37 +886,7 @@ namespace DriverRoutingSimulation
         //EXIT FUNCTION
         private void MainMapForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            StopThreads();
-
-            string currentDir = Directory.GetCurrentDirectory() + "\\Reports";
-            string dataDriver = mTitleDriverSection + Environment.NewLine + Environment.NewLine;
-            string dataOrder = mTitleOrderSection + Environment.NewLine + Environment.NewLine;
-
-            if (!Directory.Exists(currentDir))
-                System.IO.Directory.CreateDirectory(currentDir);
-
-            dataOrder += "--- ITEMS NOT YET DELIVERED ---" + Environment.NewLine;
-            for (int i = 0; i < mItems.Count; i++)
-            {
-                dataOrder += mItems[i].ToString();
-            }
-
-            dataOrder += "--- ITEMS DELIVERED ---" + Environment.NewLine;
-            for (int i = 0; i < mDealtWithItems.Count; i++)
-            {
-                dataOrder += mDealtWithItems[i].ToString();
-            }
-
-            string[] filesAlreadyCreated = Directory.GetFiles(currentDir, mTitleFileName + "*")
-                                     .Select(path => Path.GetFileName(path))
-                                     .ToArray();
-
-            string title = currentDir + "\\" + mTitleFileName + filesAlreadyCreated.Length.ToString() + ".txt";
-
-            System.IO.StreamWriter file = new System.IO.StreamWriter(title);
-            file.WriteLine(dataDriver + dataOrder);
-
-            file.Close();
+            GenerateReport();
         }
     }
 

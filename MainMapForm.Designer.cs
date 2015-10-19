@@ -68,6 +68,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button_RemoveDelivery_MainMapForm = new System.Windows.Forms.Button();
             this.textBox_DebugBox_MainMapForm = new System.Windows.Forms.TextBox();
+            this.button_GenerateReport_MainMapForm = new System.Windows.Forms.Button();
             this.groupBox_Controls_MainMapForm.SuspendLayout();
             this.groupBox_Statistics_MainMapForm.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +104,7 @@
             // groupBox_Controls_MainMapForm
             // 
             this.groupBox_Controls_MainMapForm.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox_Controls_MainMapForm.Controls.Add(this.button_GenerateReport_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_DebugBox_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.button_RemoveDelivery_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_DeliveryFee_MainMapForm);
@@ -484,6 +486,16 @@
             this.textBox_DebugBox_MainMapForm.TabIndex = 22;
             this.textBox_DebugBox_MainMapForm.Text = "DEBUG BOX";
             // 
+            // button_GenerateReport_MainMapForm
+            // 
+            this.button_GenerateReport_MainMapForm.Location = new System.Drawing.Point(234, 65);
+            this.button_GenerateReport_MainMapForm.Name = "button_GenerateReport_MainMapForm";
+            this.button_GenerateReport_MainMapForm.Size = new System.Drawing.Size(108, 23);
+            this.button_GenerateReport_MainMapForm.TabIndex = 23;
+            this.button_GenerateReport_MainMapForm.Text = "Generate Report";
+            this.button_GenerateReport_MainMapForm.UseVisualStyleBackColor = true;
+            this.button_GenerateReport_MainMapForm.Click += new System.EventHandler(this.button_GenerateReport_MainMapForm_Click);
+            // 
             // MainMapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -545,5 +557,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button_RemoveDelivery_MainMapForm;
         private System.Windows.Forms.TextBox textBox_DebugBox_MainMapForm;
+        private System.Windows.Forms.Button button_GenerateReport_MainMapForm;
     }
 }

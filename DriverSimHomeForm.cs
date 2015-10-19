@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DriverRoutingSimulation
 {
-    public partial class Form1 : Form
+    public partial class DriverSimHomeForm : Form
     {
-        public Form1()
+        public DriverSimHomeForm()
         {
             InitializeComponent(); 
         }
