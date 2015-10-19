@@ -33,11 +33,11 @@
             // 
             // button_TestMap_MainForm
             // 
-            this.button_TestMap_MainForm.Location = new System.Drawing.Point(78, 90);
+            this.button_TestMap_MainForm.Location = new System.Drawing.Point(43, 93);
             this.button_TestMap_MainForm.Name = "button_TestMap_MainForm";
-            this.button_TestMap_MainForm.Size = new System.Drawing.Size(75, 23);
+            this.button_TestMap_MainForm.Size = new System.Drawing.Size(138, 23);
             this.button_TestMap_MainForm.TabIndex = 0;
-            this.button_TestMap_MainForm.Text = "Test Map";
+            this.button_TestMap_MainForm.Text = "Run Simulation";
             this.button_TestMap_MainForm.UseVisualStyleBackColor = true;
             this.button_TestMap_MainForm.Click += new System.EventHandler(this.button_TestMap_MainForm_Click);
             // 
@@ -45,10 +45,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(228, 235);
+            this.ClientSize = new System.Drawing.Size(228, 225);
             this.Controls.Add(this.button_TestMap_MainForm);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Delivery Sim";
             this.ResumeLayout(false);
 
         }

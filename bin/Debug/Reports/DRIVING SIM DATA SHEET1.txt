@@ -1,0 +1,77 @@
+DRIVER DATA
+
+ORDER DATA
+
+--- ITEMS NOT YET DELIVERED ---
+Order ID: 0
+Time Order Was Created: 10192015130356
+Time Order Was Accepted: 10192015130356
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=47.3685943452134, Lng=-74.35546875}
+Destination Point: {Lat=45.6447682177519, Lng=-71.9384765625}
+--- --- --- --- ---Order ID: 1
+Time Order Was Created: 10192015130358
+Time Order Was Accepted: 10192015130358
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=44.9803423808497, Lng=-74.64111328125}
+Destination Point: {Lat=45.1200528415305, Lng=-75.25634765625}
+--- --- --- --- ---Order ID: 2
+Time Order Was Created: 10192015130400
+Time Order Was Accepted: 10192015130400
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.1045463097687, Lng=-76.48681640625}
+Destination Point: {Lat=45.4909456926273, Lng=-73.388671875}
+--- --- --- --- ---Order ID: 4
+Time Order Was Created: 10192015130408
+Time Order Was Accepted: 10192015130408
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4108638066155, Lng=-75.7016372680664}
+Destination Point: {Lat=45.4279735465552, Lng=-75.6597518920898}
+--- --- --- --- ---Order ID: 5
+Time Order Was Created: 10192015130411
+Time Order Was Accepted: 10192015130411
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4140873405971, Lng=-75.6924748420715}
+Destination Point: {Lat=45.4145392231798, Lng=-75.6929039955139}
+--- --- --- --- ---Order ID: 8
+Time Order Was Created: 10192015130503
+Time Order Was Accepted: 10192015130503
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4123852170754, Lng=-75.6909513473511}
+Destination Point: {Lat=45.4122345842044, Lng=-75.6934833526611}
+--- --- --- --- ------ ITEMS DELIVERED ---
+Order ID: 3
+Time Order Was Created: 10192015130406
+Time Order Was Accepted: 10192015130412
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4160153477515, Lng=-75.6937837600708}
+Destination Point: {Lat=45.4168889543224, Lng=-75.694727897644}
+--- --- --- --- ---Order ID: 6
+Time Order Was Created: 10192015130421
+Time Order Was Accepted: 10192015130421
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4135752026322, Lng=-75.6918525695801}
+Destination Point: {Lat=45.4127919238202, Lng=-75.6936550140381}
+--- --- --- --- ---Order ID: 7
+Time Order Was Created: 10192015130448
+Time Order Was Accepted: 10192015130449
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4129726814334, Lng=-75.6914019584656}
+Destination Point: {Lat=45.4137559577384, Lng=-75.6896209716797}
+--- --- --- --- ---Order ID: 9
+Time Order Was Created: 10192015130509
+Time Order Was Accepted: 10192015130511
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4131082492636, Lng=-75.6893634796143}
+Destination Point: {Lat=45.4128521764222, Lng=-75.6913590431213}
+--- --- --- --- ---

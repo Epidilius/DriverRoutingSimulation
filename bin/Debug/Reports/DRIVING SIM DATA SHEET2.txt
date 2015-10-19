@@ -1,0 +1,55 @@
+DRIVER DATA
+
+ORDER DATA
+
+--- ITEMS NOT YET DELIVERED ---
+Order ID: 4
+Time Order Was Created: 10192015140822
+Time Order Was Accepted: 10192015140822
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4106830422528, Lng=-75.7077741622925}
+Destination Point: {Lat=45.4106529148028, Lng=-75.7001781463623}
+--- --- --- --- ---
+Order ID: 5
+Time Order Was Created: 10192015140825
+Time Order Was Accepted: 10192015140825
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4123099006901, Lng=-75.6975173950195}
+Destination Point: {Lat=45.412490659846, Lng=-75.7010364532471}
+--- --- --- --- ---
+--- ITEMS DELIVERED ---
+Order ID: 0
+Time Order Was Created: 10192015140743
+Time Order Was Accepted: 10192015140747
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4165274635874, Lng=-75.6984615325928}
+Destination Point: {Lat=45.4136354543985, Lng=-75.6937408447266}
+--- --- --- --- ---
+Order ID: 1
+Time Order Was Created: 10192015140744
+Time Order Was Accepted: 10192015140805
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4141174662151, Lng=-75.7071304321289}
+Destination Point: {Lat=45.4102010011238, Lng=-75.6998348236084}
+--- --- --- --- ---
+Order ID: 2
+Time Order Was Created: 10192015140745
+Time Order Was Accepted: 10192015140811
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.4104420222025, Lng=-75.7127094268799}
+Destination Point: {Lat=45.4074291847939, Lng=-75.7062721252441}
+--- --- --- --- ---
+Order ID: 3
+Time Order Was Created: 10192015140820
+Time Order Was Accepted: 10192015140820
+Time Order Was Picked Up: 01010001000000
+Time Order Was Dropped Off: 01010001000000
+Origin Point: {Lat=45.415653851424, Lng=-75.7033109664917}
+Destination Point: {Lat=45.4142078429727, Lng=-75.7017660140991}
+--- --- --- --- ---
+

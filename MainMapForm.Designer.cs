@@ -44,8 +44,6 @@
             this.label_ActiveDriverCount_MainMapForm = new System.Windows.Forms.Label();
             this.button_RemoveDriver_MainMapForm = new System.Windows.Forms.Button();
             this.button_AddDriver_MainMapForm = new System.Windows.Forms.Button();
-            this.textBox_SimulationSpeed_MainMapForm = new System.Windows.Forms.TextBox();
-            this.label_SimulationSpeed_MainMapForm = new System.Windows.Forms.Label();
             this.textBox_MaxTravelDistance_MainMapForm = new System.Windows.Forms.TextBox();
             this.label_MaxTravelDistance_MainMapForm = new System.Windows.Forms.Label();
             this.textBox_DriverFee_MainMapForm = new System.Windows.Forms.TextBox();
@@ -60,7 +58,6 @@
             this.textBox_AverageCostPerDelivery_MainMapForm = new System.Windows.Forms.TextBox();
             this.textBox_AverageTravelDistance_MainMapForm = new System.Windows.Forms.TextBox();
             this.textBox_AverageDeliveryTime_MainMapForm = new System.Windows.Forms.TextBox();
-            this.textBox_DebugBox_MainMapForm = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -69,6 +66,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.button_RemoveDelivery_MainMapForm = new System.Windows.Forms.Button();
+            this.textBox_DebugBox_MainMapForm = new System.Windows.Forms.TextBox();
             this.groupBox_Controls_MainMapForm.SuspendLayout();
             this.groupBox_Statistics_MainMapForm.SuspendLayout();
             this.SuspendLayout();
@@ -104,6 +103,8 @@
             // groupBox_Controls_MainMapForm
             // 
             this.groupBox_Controls_MainMapForm.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_DebugBox_MainMapForm);
+            this.groupBox_Controls_MainMapForm.Controls.Add(this.button_RemoveDelivery_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_DeliveryFee_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.label9);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.button_AddDeliveryComplete_MainMapForm);
@@ -118,8 +119,6 @@
             this.groupBox_Controls_MainMapForm.Controls.Add(this.label_ActiveDriverCount_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.button_RemoveDriver_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.button_AddDriver_MainMapForm);
-            this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_SimulationSpeed_MainMapForm);
-            this.groupBox_Controls_MainMapForm.Controls.Add(this.label_SimulationSpeed_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_MaxTravelDistance_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.label_MaxTravelDistance_MainMapForm);
             this.groupBox_Controls_MainMapForm.Controls.Add(this.textBox_DriverFee_MainMapForm);
@@ -127,7 +126,7 @@
             this.groupBox_Controls_MainMapForm.Controls.Add(this.label_DriversActive_MainMapForm);
             this.groupBox_Controls_MainMapForm.Location = new System.Drawing.Point(518, 12);
             this.groupBox_Controls_MainMapForm.Name = "groupBox_Controls_MainMapForm";
-            this.groupBox_Controls_MainMapForm.Size = new System.Drawing.Size(637, 250);
+            this.groupBox_Controls_MainMapForm.Size = new System.Drawing.Size(429, 270);
             this.groupBox_Controls_MainMapForm.TabIndex = 2;
             this.groupBox_Controls_MainMapForm.TabStop = false;
             this.groupBox_Controls_MainMapForm.Text = "Controls";
@@ -152,9 +151,9 @@
             // 
             // button_AddDeliveryComplete_MainMapForm
             // 
-            this.button_AddDeliveryComplete_MainMapForm.Location = new System.Drawing.Point(308, 169);
+            this.button_AddDeliveryComplete_MainMapForm.Location = new System.Drawing.Point(6, 241);
             this.button_AddDeliveryComplete_MainMapForm.Name = "button_AddDeliveryComplete_MainMapForm";
-            this.button_AddDeliveryComplete_MainMapForm.Size = new System.Drawing.Size(256, 23);
+            this.button_AddDeliveryComplete_MainMapForm.Size = new System.Drawing.Size(417, 23);
             this.button_AddDeliveryComplete_MainMapForm.TabIndex = 18;
             this.button_AddDeliveryComplete_MainMapForm.Text = "Add Delivery";
             this.button_AddDeliveryComplete_MainMapForm.UseVisualStyleBackColor = true;
@@ -163,7 +162,7 @@
             // label_DestinationAddress_MainMapForm
             // 
             this.label_DestinationAddress_MainMapForm.AutoSize = true;
-            this.label_DestinationAddress_MainMapForm.Location = new System.Drawing.Point(239, 227);
+            this.label_DestinationAddress_MainMapForm.Location = new System.Drawing.Point(6, 218);
             this.label_DestinationAddress_MainMapForm.Name = "label_DestinationAddress_MainMapForm";
             this.label_DestinationAddress_MainMapForm.Size = new System.Drawing.Size(63, 13);
             this.label_DestinationAddress_MainMapForm.TabIndex = 17;
@@ -172,7 +171,7 @@
             // label_OriginAddress_MainMapForm
             // 
             this.label_OriginAddress_MainMapForm.AutoSize = true;
-            this.label_OriginAddress_MainMapForm.Location = new System.Drawing.Point(265, 201);
+            this.label_OriginAddress_MainMapForm.Location = new System.Drawing.Point(32, 192);
             this.label_OriginAddress_MainMapForm.Name = "label_OriginAddress_MainMapForm";
             this.label_OriginAddress_MainMapForm.Size = new System.Drawing.Size(37, 13);
             this.label_OriginAddress_MainMapForm.TabIndex = 16;
@@ -180,21 +179,21 @@
             // 
             // textBox_DestinationAddress_MainMapForm
             // 
-            this.textBox_DestinationAddress_MainMapForm.Location = new System.Drawing.Point(308, 224);
+            this.textBox_DestinationAddress_MainMapForm.Location = new System.Drawing.Point(75, 215);
             this.textBox_DestinationAddress_MainMapForm.Name = "textBox_DestinationAddress_MainMapForm";
-            this.textBox_DestinationAddress_MainMapForm.Size = new System.Drawing.Size(256, 20);
+            this.textBox_DestinationAddress_MainMapForm.Size = new System.Drawing.Size(348, 20);
             this.textBox_DestinationAddress_MainMapForm.TabIndex = 15;
             // 
             // textBox_OriginAddress_MainMapForm
             // 
-            this.textBox_OriginAddress_MainMapForm.Location = new System.Drawing.Point(308, 198);
+            this.textBox_OriginAddress_MainMapForm.Location = new System.Drawing.Point(75, 189);
             this.textBox_OriginAddress_MainMapForm.Name = "textBox_OriginAddress_MainMapForm";
-            this.textBox_OriginAddress_MainMapForm.Size = new System.Drawing.Size(256, 20);
+            this.textBox_OriginAddress_MainMapForm.Size = new System.Drawing.Size(348, 20);
             this.textBox_OriginAddress_MainMapForm.TabIndex = 11;
             // 
             // textBox_PricePerKilometer_MainMapForm
             // 
-            this.textBox_PricePerKilometer_MainMapForm.Location = new System.Drawing.Point(6, 227);
+            this.textBox_PricePerKilometer_MainMapForm.Location = new System.Drawing.Point(226, 108);
             this.textBox_PricePerKilometer_MainMapForm.Name = "textBox_PricePerKilometer_MainMapForm";
             this.textBox_PricePerKilometer_MainMapForm.Size = new System.Drawing.Size(100, 20);
             this.textBox_PricePerKilometer_MainMapForm.TabIndex = 14;
@@ -204,7 +203,7 @@
             // label_PricePerKilmoter_MainMapForm
             // 
             this.label_PricePerKilmoter_MainMapForm.AutoSize = true;
-            this.label_PricePerKilmoter_MainMapForm.Location = new System.Drawing.Point(6, 211);
+            this.label_PricePerKilmoter_MainMapForm.Location = new System.Drawing.Point(226, 92);
             this.label_PricePerKilmoter_MainMapForm.Name = "label_PricePerKilmoter_MainMapForm";
             this.label_PricePerKilmoter_MainMapForm.Size = new System.Drawing.Size(99, 13);
             this.label_PricePerKilmoter_MainMapForm.TabIndex = 13;
@@ -258,24 +257,6 @@
             this.button_AddDriver_MainMapForm.Text = "Add Driver";
             this.button_AddDriver_MainMapForm.UseVisualStyleBackColor = true;
             this.button_AddDriver_MainMapForm.Click += new System.EventHandler(this.button_AddDriver_MainMapForm_Click);
-            // 
-            // textBox_SimulationSpeed_MainMapForm
-            // 
-            this.textBox_SimulationSpeed_MainMapForm.Location = new System.Drawing.Point(6, 188);
-            this.textBox_SimulationSpeed_MainMapForm.Name = "textBox_SimulationSpeed_MainMapForm";
-            this.textBox_SimulationSpeed_MainMapForm.Size = new System.Drawing.Size(100, 20);
-            this.textBox_SimulationSpeed_MainMapForm.TabIndex = 7;
-            this.textBox_SimulationSpeed_MainMapForm.Text = "1";
-            this.textBox_SimulationSpeed_MainMapForm.TextChanged += new System.EventHandler(this.textBox_SimulationSpeed_MainMapForm_TextChanged);
-            // 
-            // label_SimulationSpeed_MainMapForm
-            // 
-            this.label_SimulationSpeed_MainMapForm.AutoSize = true;
-            this.label_SimulationSpeed_MainMapForm.Location = new System.Drawing.Point(3, 171);
-            this.label_SimulationSpeed_MainMapForm.Name = "label_SimulationSpeed_MainMapForm";
-            this.label_SimulationSpeed_MainMapForm.Size = new System.Drawing.Size(92, 13);
-            this.label_SimulationSpeed_MainMapForm.TabIndex = 6;
-            this.label_SimulationSpeed_MainMapForm.Text = "Simulation Speed:";
             // 
             // textBox_MaxTravelDistance_MainMapForm
             // 
@@ -333,7 +314,6 @@
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.textBox_AverageCostPerDelivery_MainMapForm);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.textBox_AverageTravelDistance_MainMapForm);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.textBox_AverageDeliveryTime_MainMapForm);
-            this.groupBox_Statistics_MainMapForm.Controls.Add(this.textBox_DebugBox_MainMapForm);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.label8);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.label7);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.label6);
@@ -342,9 +322,9 @@
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.label3);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.label2);
             this.groupBox_Statistics_MainMapForm.Controls.Add(this.label1);
-            this.groupBox_Statistics_MainMapForm.Location = new System.Drawing.Point(518, 268);
+            this.groupBox_Statistics_MainMapForm.Location = new System.Drawing.Point(518, 288);
             this.groupBox_Statistics_MainMapForm.Name = "groupBox_Statistics_MainMapForm";
-            this.groupBox_Statistics_MainMapForm.Size = new System.Drawing.Size(637, 250);
+            this.groupBox_Statistics_MainMapForm.Size = new System.Drawing.Size(429, 232);
             this.groupBox_Statistics_MainMapForm.TabIndex = 3;
             this.groupBox_Statistics_MainMapForm.TabStop = false;
             this.groupBox_Statistics_MainMapForm.Text = "Statistics";
@@ -412,14 +392,6 @@
             this.textBox_AverageDeliveryTime_MainMapForm.Name = "textBox_AverageDeliveryTime_MainMapForm";
             this.textBox_AverageDeliveryTime_MainMapForm.Size = new System.Drawing.Size(100, 20);
             this.textBox_AverageDeliveryTime_MainMapForm.TabIndex = 10;
-            // 
-            // textBox_DebugBox_MainMapForm
-            // 
-            this.textBox_DebugBox_MainMapForm.Location = new System.Drawing.Point(357, 22);
-            this.textBox_DebugBox_MainMapForm.Name = "textBox_DebugBox_MainMapForm";
-            this.textBox_DebugBox_MainMapForm.Size = new System.Drawing.Size(274, 20);
-            this.textBox_DebugBox_MainMapForm.TabIndex = 9;
-            this.textBox_DebugBox_MainMapForm.Text = "DEBUG BOX";
             // 
             // label8
             // 
@@ -493,16 +465,36 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Average Time Per Delivery(Mins):";
             // 
+            // button_RemoveDelivery_MainMapForm
+            // 
+            this.button_RemoveDelivery_MainMapForm.Location = new System.Drawing.Point(234, 36);
+            this.button_RemoveDelivery_MainMapForm.Name = "button_RemoveDelivery_MainMapForm";
+            this.button_RemoveDelivery_MainMapForm.Size = new System.Drawing.Size(108, 23);
+            this.button_RemoveDelivery_MainMapForm.TabIndex = 21;
+            this.button_RemoveDelivery_MainMapForm.Text = "Remove Delivery";
+            this.button_RemoveDelivery_MainMapForm.UseVisualStyleBackColor = true;
+            this.button_RemoveDelivery_MainMapForm.Click += new System.EventHandler(this.button_RemoveDelivery_MainMapForm_Click);
+            // 
+            // textBox_DebugBox_MainMapForm
+            // 
+            this.textBox_DebugBox_MainMapForm.Enabled = false;
+            this.textBox_DebugBox_MainMapForm.Location = new System.Drawing.Point(120, 163);
+            this.textBox_DebugBox_MainMapForm.Name = "textBox_DebugBox_MainMapForm";
+            this.textBox_DebugBox_MainMapForm.Size = new System.Drawing.Size(303, 20);
+            this.textBox_DebugBox_MainMapForm.TabIndex = 22;
+            this.textBox_DebugBox_MainMapForm.Text = "DEBUG BOX";
+            // 
             // MainMapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1166, 532);
+            this.ClientSize = new System.Drawing.Size(971, 532);
             this.Controls.Add(this.groupBox_Statistics_MainMapForm);
             this.Controls.Add(this.groupBox_Controls_MainMapForm);
             this.Controls.Add(this.gMapControl_MainMap_MainMapForm);
             this.Name = "MainMapForm";
-            this.Text = "MainMapForm";
+            this.Text = "Driver Simulation";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainMapForm_FormClosing);
             this.groupBox_Controls_MainMapForm.ResumeLayout(false);
             this.groupBox_Controls_MainMapForm.PerformLayout();
             this.groupBox_Statistics_MainMapForm.ResumeLayout(false);
@@ -525,8 +517,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox_SimulationSpeed_MainMapForm;
-        private System.Windows.Forms.Label label_SimulationSpeed_MainMapForm;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -535,7 +525,6 @@
         private System.Windows.Forms.Button button_RemoveDriver_MainMapForm;
         private System.Windows.Forms.Button button_AddDriver_MainMapForm;
         private System.Windows.Forms.Button button_DoNothingOnClick_MainMapForm;
-        private System.Windows.Forms.TextBox textBox_DebugBox_MainMapForm;
         private System.Windows.Forms.Button button_AddDelivery_MainMapForm;
         private System.Windows.Forms.TextBox textBox_PricePerKilometer_MainMapForm;
         private System.Windows.Forms.Label label_PricePerKilmoter_MainMapForm;
@@ -554,5 +543,7 @@
         private System.Windows.Forms.TextBox textBox_MaximumEfficiency_MainMapForm;
         private System.Windows.Forms.TextBox textBox_DeliveryFee_MainMapForm;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button_RemoveDelivery_MainMapForm;
+        private System.Windows.Forms.TextBox textBox_DebugBox_MainMapForm;
     }
 }
