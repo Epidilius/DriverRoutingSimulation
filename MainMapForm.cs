@@ -724,8 +724,6 @@ namespace DriverRoutingSimulation
                         mDrivers[i] = tempDriver;
 
                         //TODO: Move this into the after delivered area
-                        mDealtWithItems.Add(mItems[shortestDistanceIndex]);
-                        mItems.RemoveAt(shortestDistanceIndex);
                     }
                     else
                     {
@@ -803,6 +801,9 @@ namespace DriverRoutingSimulation
                             Order tempOrder = tempDriver.OrderWorkingOn;
                             tempOrder.DropOffMarker = null;
                             tempOrder.OrderName = mCommandNoOrder;
+
+                            mDealtWithItems.Add(tempDriver.OrderWorkingOn);
+                            mItems.Remove(tempDriver.OrderWorkingOn);
 
                             tempDriver.OrdersWorkedOn.Add(tempDriver.OrderWorkingOn.OrderID);
                             tempDriver.OrderWorkingOn = tempOrder;
