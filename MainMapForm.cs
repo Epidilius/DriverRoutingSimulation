@@ -723,6 +723,7 @@ namespace DriverRoutingSimulation
                         UpdateMap(tempDriver.MapRoute);
                         mDrivers[i] = tempDriver;
 
+                        //TODO: Move this into the after delivered area
                         mDealtWithItems.Add(mItems[shortestDistanceIndex]);
                         mItems.RemoveAt(shortestDistanceIndex);
                     }
