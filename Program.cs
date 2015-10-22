@@ -16,7 +16,7 @@ namespace DriverRoutingSimulation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DriverSimForm());
+            Application.Run(new DriverSimHomeForm());
         }
     }
 }

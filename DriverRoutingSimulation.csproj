@@ -51,11 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DriverUpdateThread.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="DriverSimHomeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="DriverSimHomeForm.Designer.cs">
+      <DependentUpon>DriverSimHomeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainMapForm.cs">
       <SubType>Form</SubType>
@@ -65,8 +65,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="DriverSimHomeForm.resx">
+      <DependentUpon>DriverSimHomeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMapForm.resx">
       <DependentUpon>MainMapForm.cs</DependentUpon>

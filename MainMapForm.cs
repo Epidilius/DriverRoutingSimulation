@@ -421,7 +421,7 @@ namespace DriverRoutingSimulation
                 {
                     int index = -1;
                     //Pickup Markers
-                    for (int i = 0; i < mDeliveryMarkers.Markers.Count; i++)
+                    for (int i = 0; i < mItems.Count; i++)
                     {
                         if ((GMapMarker)mItems[i].PickupMarker == item || (GMapMarker)mItems[i].DropOffMarker == item)
                         {
@@ -431,12 +431,44 @@ namespace DriverRoutingSimulation
                     }
 
                     if (index == -1)
-                        return;
-                                     
-                    mDeliveryMarkers.Markers.Remove(mItems[index].DropOffMarker);
-                    mDeliveryMarkers.Markers.Remove(mItems[index].PickupMarker);
-                    mItems.RemoveAt(index);
-                    return;
+                    {
+                        for (int i = 0; i < mDealtWithItems.Count; i++)
+                        {
+                            if ((GMapMarker)mDealtWithItems[i].PickupMarker == item || (GMapMarker)mDealtWithItems[i].DropOffMarker == item)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+
+                        if (index == -1)
+                            return;
+                        try
+                        {
+                            mDeliveryMarkers.Markers.Remove(mDealtWithItems[index].DropOffMarker);
+                        }
+                        catch { }
+                        try
+                        {
+                            mDeliveryMarkers.Markers.Remove(mDealtWithItems[index].PickupMarker);
+                        }
+                        catch { }
+                        mDealtWithItems.RemoveAt(index);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            mDeliveryMarkers.Markers.Remove(mItems[index].DropOffMarker);
+                        }
+                        catch { }
+                        try
+                        {
+                            mDeliveryMarkers.Markers.Remove(mItems[index].PickupMarker);
+                        }
+                        catch { }
+                        mItems.RemoveAt(index);
+                    }
                 }
             }
         }
