@@ -1,0 +1,15 @@
+DRIVER DATA
+
+ORDER DATA
+
+--- ITEMS NOT YET DELIVERED ---
+Order ID: 0
+Time Order Was Created: 2015-10-22T19:13:46
+Time Order Was Accepted: 2015-10-22T19:13:46
+Time Order Was Picked Up: 0001-01-01T00:00:00
+Time Order Was Dropped Off: 0001-01-01T00:00:00
+Origin Point: {Lat=47.1598400130443, Lng=-76.9921875}
+Destination Point: {Lat=45.1510532655634, Lng=-72.5537109375}
+--- --- --- --- ---
+--- ITEMS DELIVERED ---
+

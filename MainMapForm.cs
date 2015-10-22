@@ -1063,10 +1063,10 @@ namespace DriverRoutingSimulation
         public override string ToString()
         {
             string toReturn =   "Order ID: " + orderID + Environment.NewLine +
-                                "Time Order Was Created: " + timeOrderWasCreated.ToString("MMddyyyyHHmmss") + Environment.NewLine +
-                                "Time Order Was Accepted: " + timeOrderWasAccepted.ToString("MMddyyyyHHmmss") + Environment.NewLine +
-                                "Time Order Was Picked Up: " + timeOrderWasPickedUp.ToString("MMddyyyyHHmmss") + Environment.NewLine +
-                                "Time Order Was Dropped Off: " + timeOrderWasDroppedOff.ToString("MMddyyyyHHmmss") + Environment.NewLine +
+                                "Time Order Was Created: " + timeOrderWasCreated.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine +
+                                "Time Order Was Accepted: " + timeOrderWasAccepted.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine +
+                                "Time Order Was Picked Up: " + timeOrderWasPickedUp.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine +
+                                "Time Order Was Dropped Off: " + timeOrderWasDroppedOff.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine +
                                 "Origin Point: " + pickupPoint.ToString() + Environment.NewLine +
                                 "Destination Point: " + dropoOffPoint.ToString() + Environment.NewLine +
                                 "--- --- --- --- ---" + Environment.NewLine;
